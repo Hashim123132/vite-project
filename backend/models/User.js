@@ -23,11 +23,17 @@ const { Schema } = mongoose;
     },
     ChooseClassMode:{
         type:String,
-        required:false
+        required:false,
+        enum:['Physical Class', 'Online Class']
     },
     SelectCourse:{
         type:String,
-        required:false
+        required:false,
+        enum:[
+            'Full Stack Digital Marketing',
+            'Premium Graphic Designing',
+            'Full Stack Web Development with React & Node Js'
+        ]
     },
     City:{
         type: String,

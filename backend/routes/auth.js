@@ -51,7 +51,7 @@ router.post('/createuser',[
     //if user exists 
     let user = await User.findOne({email: req.body.email})
     if(user){
-      res.status(409).json({msg:'User with this email or CNIC already exists'})
+      return res.status(409).json({msg:'User with this email or CNIC already exists'})
     }
     user = await User.create({
         name: req.body.name,

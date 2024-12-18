@@ -1,6 +1,7 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import AlertContext from '../Context/AlertContext'
 const admissionPage = () => {
+    const {showAlert} = useContext(AlertContext);
     const [info, setInfo] = useState({
         
         name: '',
@@ -8,8 +9,8 @@ const admissionPage = () => {
         ContactNo: '',
         email: '',
         CNIC: '',
-        ChooseClassMode: 'Physical Class', // Default value set
-        SelectCourse: 'Full Stack Digital Marketing', // Default value set
+        ChooseClassMode: 'Physical Class', 
+        SelectCourse: 'Full Stack Digital Marketing',
         City: '',
         Address: '',
     });
@@ -22,7 +23,8 @@ const admissionPage = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent form from refreshing the page
+        e.preventDefault();
+
     
         try {
             const response = await fetch('http://localhost:5000/api/auth/createuser', {
@@ -30,34 +32,45 @@ const admissionPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(info), // Send the form data as a JSON payload
+                body: JSON.stringify(info), 
             });
     
             const result = await response.json();
-            
+          
             if (response.ok) {
-                alert('Form submitted successfully');
+                showAlert('Form submitted successfully', 'success');
+                setInfo({
+                    name:'',
+                    FatherName:'',
+                    ContactNo:'',
+                    email:'',
+                    CNIC:'',
+                    ChooseClassMode:'',
+                    SelectCourse:'',
+                    City:'',
+                    Address:'',
+                })
             } else {
-                alert(`Error: ${result.errors.map(err => err.msg).join(', ')}`);
+                showAlert(`Error: ${result.errors.map(err => err.msg).join(', ')}`);
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('There was an error submitting the form');
+            showAlert('There was an error submitting the form', "danger");
         }
     };
 
     return (
         <>
-            <div className='top bg-green-600 h-[150px] w-full flex text-white font-semibold items-center justify-between'>
+            <div className='top bg-green-600 h-[150px] w-full  text-white font-semibold items-center flex justify-between '>
                 <img className="h-[120px]" src="/images/cropped-logoPNGYETP1.png" alt="" />
                 <h1>Make a call: 0302-9898082 || 0324-9881887</h1>
             </div>
 
             <h1 className="text-3xl font-bold text-center mb-6">Apply Physical</h1>
-            <form className="space-y-4 flex flex-col items-center" onSubmit={handleSubmit}>
+            <form className="space-y-4 flex flex-col items-center " onSubmit={handleSubmit}>
                 <h2>Name (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="name"
                     type="text"
                     value={info.name}
@@ -66,7 +79,7 @@ const admissionPage = () => {
 
                 <h2>Father Name (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="FatherName"
                     type="text"
                     value={info.FatherName}
@@ -75,7 +88,7 @@ const admissionPage = () => {
 
                 <h2>Contact No (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="ContactNo"
                     type="text"
                     value={info.ContactNo}
@@ -84,7 +97,7 @@ const admissionPage = () => {
 
                 <h2>Your email (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="email"
                     type="email"
                     value={info.email}
@@ -93,7 +106,7 @@ const admissionPage = () => {
 
                 <h2>CNIC/B-Form (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="CNIC"
                     type="text"
                     value={info.CNIC}
@@ -103,7 +116,7 @@ const admissionPage = () => {
                 <h2>Choose Class Mode (required)</h2>
                 <select
                     name="ChooseClassMode"
-                    className="w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100"
+                    className="xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100"
                     value={info.ChooseClassMode}
                     onChange={handleChange}
                 >
@@ -114,7 +127,7 @@ const admissionPage = () => {
                 <h2>Select Course (required)</h2>
                 <select
                     name="SelectCourse"
-                    className="w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100"
+                    className="xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100"
                     value={info.SelectCourse}
                     onChange={handleChange}
                 >
@@ -125,7 +138,7 @@ const admissionPage = () => {
 
                 <h2>City (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="City"
                     type="text"
                     value={info.City}
@@ -134,7 +147,7 @@ const admissionPage = () => {
 
                 <h2>Address (required)</h2>
                 <input
-                    className='w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
+                    className='xsm:w-[85%] xsm:h-[40px] sm:h-[60px] sm:rounded-md w-full border max-w-[700px] pl-5 h-[60px] outline-none bg-gray-100 transition ease-out focus:bg-white duration-300'
                     name="Address"
                     type="text"
                     value={info.Address}
@@ -142,7 +155,7 @@ const admissionPage = () => {
                 />
 
                 <input
-                    className='border px-4 py-2 bg-green-400 cursor-pointer text-white font-semibold rounded-2xl hover:transito ease-out duration-300 hover:opacity-70'
+                    className='  border px-4 py-2 bg-green-400 cursor-pointer text-white font-semibold rounded-2xl hover:transito ease-out duration-300 hover:opacity-70'
                     type="submit"
                     value="Submit"
                 />
